@@ -9,8 +9,9 @@ use Alura\Mvc\Repository\VideoRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Nyholm\Psr7\Response;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class DeleteVideoController implements Controller
+class DeleteVideoController implements RequestHandlerInterface
 {   
     use FlashMessageTrait;
 
@@ -18,7 +19,7 @@ class DeleteVideoController implements Controller
     {
     }
 
-    public function processaRequisicao(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {   
 
         $querryParams = $request->getQueryParams();

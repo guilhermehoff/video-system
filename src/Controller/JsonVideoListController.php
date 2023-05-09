@@ -11,15 +11,16 @@ use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use LLaminas\Diactoros\Response\JsonResponse;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class JsonVideoListController implements Controller
+class JsonVideoListController implements RequestHandlerInterface
 {
     public function __construct(private VideoRepository $videoRepository)
     {
         
     }
 
-    public function processaRequisicao(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $videoList = array_map(function(Video $video): array{
             return [

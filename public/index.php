@@ -53,7 +53,7 @@ $creator = new ServerRequestCreator(
 
 $request = $creator->fromGlobals();
 
-$response = $controller->processaRequisicao($request);
+$response = $controller->handle($request);
 
 http_response_code($response->getStatusCode());
 foreach ($response->getHeaders() as $name => $values) {
