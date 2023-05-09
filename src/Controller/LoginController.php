@@ -7,6 +7,9 @@ namespace Alura\Mvc\Controller;
 use PDO;
 use Alura\Mvc\Controller\ConnectionController;
 use Alura\Mvc\Helper\FlashMessageTrait;
+use Nyholm\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class LoginController implements Controller
 {   
@@ -19,7 +22,7 @@ class LoginController implements Controller
         $this->pdo = ConnectionController::getInstance();
     }
 
-    public function processaRequisicao(): void
+    public function processaRequisicao(ServerRequestInterface $request): ResponseInterface
     {   
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $password = filter_input(INPUT_POST, 'password');
@@ -34,10 +37,14 @@ class LoginController implements Controller
 
         if ($correctPassword) {
             $_SESSION['logado'] = true;
-            header('Location: /');
+            return new Response(302, [
+                'Location' => '/'
+            ]);
         } else {
             $this->addErrorMessage('Usuário ou senha inválidos');
-            header('Location: /login?success=0');
+            return new Response(302, [
+                'Location' => '/login'
+            ]);
         }
     }
 }
